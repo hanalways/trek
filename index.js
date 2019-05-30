@@ -1,5 +1,6 @@
 const URL = 'https://trektravel.herokuapp.com/trips'
 
+// Status Management
 const displayStatus = (message) => {
   $('#status').html(message);
 }
@@ -9,19 +10,24 @@ const handleApiError = (error) => {
   // TODO: politely report this error to the user
 }
 
+// Loading Trips
 const loadTrips = () => {
   displayStatus("loading trips...");
 
-  // TODO: Wave 1
-  // make an axios call to the trips index and display the results
   const tripList = $('#trip-list');
   tripList.empty();
 
   axios.get(URL)
     .then((response) => {
+      displayStatus(`Successfully loaded ${response.data.length} trips.`);
+
       response.data.forEach((trip) => {
         tripList.append(`<li>${trip.name}</li>`);
       });
+    })
+    .catch((error) => {
+      displayStatus(`Encountered an error while loading trips: ${error.message}`);
+      console.log(error);
     })
 };
 
