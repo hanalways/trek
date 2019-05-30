@@ -1,3 +1,5 @@
+const URL = 'https://trektravel.herokuapp.com/trips'
+
 const displayStatus = (message) => {
   $('#status').html(message);
 }
@@ -12,7 +14,16 @@ const loadTrips = () => {
 
   // TODO: Wave 1
   // make an axios call to the trips index and display the results
-}
+  const tripList = $('#trip-list');
+  tripList.empty();
+
+  axios.get(URL)
+    .then((response) => {
+      response.data.forEach((trip) => {
+        tripList.append(`<li>${trip.name}</li>`);
+      });
+    })
+};
 
 const showTripDetails = (trip) => {
   console.log("showing details for trip", trip);
